@@ -1,0 +1,113 @@
+version: "3.8"
+
+services:
+  # ============================================================================
+  # FASTAPI API GATEWAY
+  # ============================================================================
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: sofia_backend_api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=False
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=proyecto_sofia
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_ENABLED=True
+      - STORAGE_BACKEND=local
+      - S3_ENDPOINT_URL=http://minio:9000
+      - S3_ACCESS_KEY=minioadmin
+      - S3_SECRET_KEY=minioadmin
+      - S3_BUCKET_NAME=proyecto-sofia-media
+      - CORS_ORIGINS=["http://localhost:3000","http://127.0.0.1:3000"]
+    volumes:
+      - media_uploads:/app/backend/uploads
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sofia_network
+
+  # ============================================================================
+  # BASE DE DATOS MYSQL 8.0
+  # ============================================================================
+  mysql:
+    image: mysql:8.0
+    container_name: sofia_mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=proyecto_sofia
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backend/sql/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sofia_network
+
+  # ============================================================================
+  # CACHÉ Y PUB/SUB REDIS 7
+  # ============================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: sofia_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - sofia_network
+
+  # ============================================================================
+  # OBJECT STORAGE S3 COMPATIBLE (MINIO)
+  # ============================================================================
+  minio:
+    image: minio/minio:latest
+    container_name: sofia_minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    volumes:
+      - minio_data:/data
+    networks:
+      - sofia_network
+
+volumes:
+  mysql_data:
+  redis_data:
+  minio_data:
+  media_uploads:
+
+networks:
+  sofia_network:
+    driver: bridge

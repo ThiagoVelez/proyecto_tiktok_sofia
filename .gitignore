@@ -1,0 +1,85 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# Node / Frontend
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.next/
+out/
+
+# Media Uploads (Ignorar archivos multimedia grandes subidos por usuarios pero conservar estructura)
+uploads/videos/*
+uploads/thumbnails/*
+uploads/stories/*
+uploads/avatars/*
+backend/uploads/videos/*
+backend/uploads/thumbnails/*
+backend/uploads/stories/*
+backend/uploads/avatars/*
+
+# Excepciones: conservar placeholders y .gitkeep
+!uploads/**/.gitkeep
+!backend/uploads/**/.gitkeep
+!backend/uploads/thumbnails/default_cover.jpg
+
+# IDEs, Editores y SO
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tsbuildinfo

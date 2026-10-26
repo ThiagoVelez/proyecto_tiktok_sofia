@@ -1,0 +1,117 @@
+{
+  "platform_name": "Proyecto Sofia",
+  "version": "1.0.0",
+  "audience_policy": {
+    "default_mode": "family_friendly",
+    "minimum_user_age": 13,
+    "minor_age_threshold": 18
+  },
+  "parental_control_defaults": {
+    "pin_length": 4,
+    "max_pin_attempts": 3,
+    "lockout_minutes": 15,
+    "default_daily_minutes_limit": 120,
+    "curfew_start": "22:00:00",
+    "curfew_end": "06:00:00",
+    "restricted_mode_default_for_minors": true,
+    "block_stranger_dms_for_minors": true
+  },
+  "moderation_categories": {
+    "violence": {
+      "severity": "high",
+      "action": "hide_and_review",
+      "keywords": [
+        "asesinar", "matar", "sangre explícita", "arma de fuego", "degollar",
+        "terrorismo", "bomba", "mutilación", "tortura", "golpiza"
+      ],
+      "patterns": [
+        "\\b(m[a4]t[a4]r|4s[e3]s[i1]n[a4]r)\\b",
+        "\\b(d[e3]g[o0]ll[a4]r|t[o0]rt[u4]r[a4]r)\\b"
+      ]
+    },
+    "sexual_content": {
+      "severity": "critical",
+      "action": "immediate_block",
+      "keywords": [
+        "pornografía", "porno", "sexo explícito", "desnudez", "pack erótico",
+        "cp", "pedofilia", "prostitución", "onlyfans explícito", "hentai explícito"
+      ],
+      "patterns": [
+        "\\b(p[o0]rn[o0]|p[o0]rn[o0]gr[a4]f[i1]a)\\b",
+        "\\b(s[e3]x[o0]\\s+v[i1]d[e3][o0]|p[a4]ck\\s+n[u4]d[e3]s)\\b"
+      ]
+    },
+    "hate_speech": {
+      "severity": "high",
+      "action": "immediate_block",
+      "keywords": [
+        "odio racial", "supremacismo", "xenofobia", "homofobia", "nazi",
+        "muerte a", "discriminación"
+      ],
+      "patterns": [
+        "\\b(mu[e3]rt[e3]\\s+[a4]\\s+t[o0]d[o0]s)\\b"
+      ]
+    },
+    "harassment_bullying": {
+      "severity": "medium",
+      "action": "flag_and_blur",
+      "keywords": [
+        "inútil", "mátate", "gordo asqueroso", "muérete", "fenómeno",
+        "te voy a golpear", "escoria"
+      ],
+      "patterns": [
+        "\\b(m[u4][e3]r[e3]t[e3]|m[a4]t[a4]t[e3])\\b"
+      ]
+    },
+    "self_harm": {
+      "severity": "critical",
+      "action": "immediate_block_and_alert",
+      "keywords": [
+        "suicidio", "suicidarme", "cortarme las venas", "autolesión", "cómo morir"
+      ],
+      "patterns": [
+        "\\b(su[i1]c[i1]d[i1][o0]|qu[i1]t[a4]rm[e3]\\s+l[a4]\\s+v[i1]d[a4])\\b"
+      ]
+    },
+    "scam_spam": {
+      "severity": "low",
+      "action": "restrict_reach",
+      "keywords": [
+        "gana dinero fácil", "cripto estafa", "hazte rico en 1 día", "trabajo fácil telegram",
+        "envía dinero ahora", "duplica tu dinero"
+      ],
+      "patterns": [
+        "\\b(g[a4]n[a4]\\s+d[i1]n[e3]r[o0]\\s+f[a4]c[i1]l)\\b",
+        "\\b(t[e3]l[e3]gr[a4]m\\s+@[a-z0-9_]+)\\b"
+      ]
+    },
+    "profanity_mild": {
+      "severity": "low",
+      "action": "filter_for_minors",
+      "keywords": [
+        "mierda", "estúpido", "imbécil", "idiota", "puta", "maldito", "carajo"
+      ],
+      "patterns": [
+        "\\b(m[i1][e3]rd[a4]|p[u4]t[a4]|caraj[o0])\\b"
+      ]
+    }
+  },
+  "audience_ratings": {
+    "all_ages": {
+      "description": "Contenido apto para todo público, niños y familias sin restricciones.",
+      "min_age": 0
+    },
+    "teen": {
+      "description": "Contenido apto para mayores de 13 años. Humor adolescente o vocabulario leve.",
+      "min_age": 13
+    },
+    "mature": {
+      "description": "Contenido para mayores de 18 años. Temas complejos, humor adulto, no explícito.",
+      "min_age": 18
+    },
+    "restricted": {
+      "description": "Contenido con advertencia de edad estricta. Bloqueado en Modo Restringido.",
+      "min_age": 18
+    }
+  }
+}
